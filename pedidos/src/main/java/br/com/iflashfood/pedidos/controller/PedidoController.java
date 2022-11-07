@@ -5,6 +5,7 @@ import br.com.iflashfood.pedidos.dto.PedidoDto;
 import br.com.iflashfood.pedidos.dto.StatusDto;
 import br.com.iflashfood.pedidos.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -33,6 +34,11 @@ public class PedidoController {
     @ResponseStatus(HttpStatus.OK)
     public PedidoDto listarPorId(@PathVariable @NotNull Long id){
         return service.obterPorId(id);
+    }
+
+    @GetMapping("/porta")
+    public String retornaPorta(@Value("${local.server.port}") String porta){
+        return String.format("Requisição respondida pela instância executando na porta %s", porta);
     }
 
     @PostMapping
