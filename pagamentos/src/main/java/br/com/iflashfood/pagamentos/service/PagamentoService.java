@@ -1,6 +1,7 @@
 package br.com.iflashfood.pagamentos.service;
 
 import br.com.iflashfood.pagamentos.dto.PagamentoDto;
+import br.com.iflashfood.pagamentos.http.PedidoClient;
 import br.com.iflashfood.pagamentos.model.Pagamento;
 import br.com.iflashfood.pagamentos.model.Status;
 import br.com.iflashfood.pagamentos.repository.PagamentoRepository;
@@ -20,6 +21,9 @@ public class PagamentoService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private PedidoClient pedidoClient;
 
     public Page<PagamentoDto> obterTodos(Pageable paginacao){
         return repository
@@ -51,4 +55,18 @@ public class PagamentoService {
     public void excluirPagamento(Long id){
         repository.deleteById(id);
     }
+
+    public void confirmaPagamento(Long id){
+        var pagamento = repository.findById(id);
+
+        if(pagamento == null){
+            throw new EntityNotFoundException();
+        }
+
+        pagamento.get().setStatus(Status.CONFIRMADO);
+        repository.save(pagamento.get());
+        pedidoClient.aprovaPagamento(pagamento.get().getPedidoId());
+    }
+
+
 }

@@ -60,4 +60,9 @@ public class PagamentoController {
     public void remover(@PathVariable @NotNull Long id){
         service.excluirPagamento(id);
     }
+
+    @PatchMapping("/{id}/confirmar")
+    void confirmaPagamento(@PathVariable @NotNull Long id){
+        service.confirmaPagamento(id);
+    }
 }
