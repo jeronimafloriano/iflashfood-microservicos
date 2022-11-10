@@ -2,6 +2,7 @@ package br.com.iflashfood.pagamentos.controller;
 
 import br.com.iflashfood.pagamentos.dto.PagamentoDto;
 import br.com.iflashfood.pagamentos.service.PagamentoService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -62,7 +63,12 @@ public class PagamentoController {
     }
 
     @PatchMapping("/{id}/confirmar")
-    void confirmaPagamento(@PathVariable @NotNull Long id){
+    @CircuitBreaker(name = "atualizaPedido", fallbackMethod = "pagamentoAutorizadoComIntegracaoPendente")
+    public void confirmaPagamento(@PathVariable @NotNull Long id){
         service.confirmaPagamento(id);
+    }
+
+    public void pagamentoAutorizadoComIntegracaoPendente(Long id, Exception e){
+        service.alteraStatus(id);
     }
 }
