@@ -27,3 +27,5 @@ Lpagamentos/src/main/java/br/com/iflashfood/pagamentos/http/PedidoClient.java,b
 Ypagamentos/src/main/java/br/com/iflashfood/pagamentos/controller/PagamentoController.java,4\a\4a62a0972c63a9a20971f33bf24f75c669db3e41
 ƒ
 Spagamentos/src/main/java/br/com/iflashfood/pagamentos/service/PagamentoService.java,5\a\5a8792c0f813cff8e36e42e36e2a4a192dd5eba7
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
