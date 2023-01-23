@@ -29,6 +29,8 @@ public class PagamentoService {
         return repository
                 .findAll(paginacao)
                 .map(p -> modelMapper.map(p, PagamentoDto.class));
+        //Aqui, ao invés de fazer um new PagamentoDto passando as informações que serão retornadas,
+        //estou chamando o modelMapper que já irá setar as informações e gerar os objetos PagamentoDto
     }
 
     public PagamentoDto obterPorId(Long id){
@@ -71,7 +73,7 @@ public class PagamentoService {
     }
 
 
-    public void alteraStatus(Long id) {
+    public void alteraStatusQuandoPagamentoPendente(Long id) {
         var pagamento = repository.findById(id);
 
         if(pagamento == null){

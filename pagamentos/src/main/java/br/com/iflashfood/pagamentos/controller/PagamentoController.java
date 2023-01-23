@@ -69,6 +69,6 @@ public class PagamentoController {
     }
 
     public void pagamentoAutorizadoComIntegracaoPendente(Long id, Exception e){
-        service.alteraStatus(id);
+        service.alteraStatusQuandoPagamentoPendente(id);
     }
 }
