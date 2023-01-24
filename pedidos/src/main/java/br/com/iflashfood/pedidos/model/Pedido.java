@@ -16,21 +16,24 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private LocalDateTime dataHora;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pedido")
     private List<ItensPedido> itens = new ArrayList<>();
 
+    public Pedido(Long id, Status status, List<ItensPedido> itens) {
+        this.id = id;
+        this.dataHora = LocalDateTime.now();
+        this.status = Status.REALIZADO;
+        this.itens = itens;
+    }
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,9 +37,12 @@ public class PedidoService {
 
     public PedidoDto criarPedido(PedidoDto dto){
         Pedido pedido = modelMapper.map(dto, Pedido.class);
-        pedido.setStatus(Status.REALIZADO);
         pedido.getItens().forEach(p -> p.setPedido(pedido));
+        pedido.setDataHora(LocalDateTime.now());
+        pedido.setStatus(Status.REALIZADO);
+
         Pedido pedidoSalvo = repository.save(pedido);
+        dto.setId(pedidoSalvo.getId());
 
         return modelMapper.map(pedidoSalvo, PedidoDto.class);
     }
